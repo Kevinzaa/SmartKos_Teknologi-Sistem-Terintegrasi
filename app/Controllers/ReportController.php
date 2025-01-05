@@ -14,7 +14,7 @@ class ReportController extends ResourceController
             'problem_type'  => 'required',
             'description'   => 'required',
             'room_location' => 'required',
-            'photo'         => 'uploaded[photo]|max_size[photo,2048]|is_image[photo]', // Validasi file
+            'photo'         => 'uploaded[photo]|max_size[photo,2048]|is_image[photo]', 
         ];
 
         if (!$this->validate($rules)) {
@@ -23,10 +23,9 @@ class ReportController extends ResourceController
 
         $file = $this->request->getFile('photo');
         if ($file->isValid() && !$file->hasMoved()) {
-            // Simpan file ke folder 'public/uploads'
-            $fileName = $file->getRandomName(); // Nama acak untuk file
-            $file->move('uploads', $fileName); // Simpan file di 'public/uploads'
-            $photoPath = 'uploads/' . $fileName; // Path relatif
+            $fileName = $file->getRandomName(); 
+            $file->move('uploads', $fileName); 
+            $photoPath = 'uploads/' . $fileName; 
         } else {
             return $this->fail('Error uploading photo.');
         }
@@ -52,9 +51,8 @@ class ReportController extends ResourceController
     {
         $reports = $this->model->findAll();
     
-        // Tambahkan URL lengkap untuk foto
         foreach ($reports as &$report) {
-            $report['photo_url'] = base_url($report['photo']); // Base URL + relative path
+            $report['photo_url'] = base_url($report['photo']); 
         }
     
         return $this->respond($reports);
@@ -63,9 +61,8 @@ class ReportController extends ResourceController
     // Update report status
     public function updateStatus($id = null)
     {
-        $data = $this->request->getJSON(true); // Ambil data JSON dari request
+        $data = $this->request->getJSON(true); 
 
-        // Periksa apakah laporan dengan ID tersebut ada
         $report = $this->model->find($id);
         if (!$report) {
             return $this->failNotFound("Report not found.");
@@ -109,19 +106,16 @@ class ReportController extends ResourceController
 
     public function deleteReport($id = null)
     {
-        // Cari laporan berdasarkan ID
         $report = $this->model->find($id);
 
         if (!$report) {
             return $this->failNotFound("Report not found.");
         }
 
-        // Hapus file foto jika ada
         if (!empty($report['photo']) && file_exists(FCPATH . $report['photo'])) {
-            unlink(FCPATH . $report['photo']); // Hapus file dari server
+            unlink(FCPATH . $report['photo']); 
         }
 
-        // Hapus laporan dari database
         if ($this->model->delete($id)) {
             return $this->respondDeleted(["message" => "Report deleted successfully."]);
         } else {
