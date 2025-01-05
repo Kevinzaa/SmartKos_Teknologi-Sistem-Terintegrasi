@@ -19,13 +19,21 @@ async function fetchWithAuth(url, options = {}) {
 document.getElementById('createForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const response = await fetchWithAuth(`${apiUrl}/create`, {
-        method: 'POST',
-        body: formData,
-    });
-    const result = await response.json();
-    alert(result.message || "Failed to submit report.");
+    try {
+        const response = await fetchWithAuth(`${apiUrl}/create`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        const result = await response.json();
+        console.log(result); // Tambahkan log ini
+        alert(result.message || "Failed to submit report.");
+    } catch (error) {
+        console.error(error); // Log error jika terjadi
+        alert("An error occurred while submitting the report.");
+    }
 });
+
 
 document.getElementById('viewReports').addEventListener('click', async () => {
     const response = await fetchWithAuth(apiUrl);

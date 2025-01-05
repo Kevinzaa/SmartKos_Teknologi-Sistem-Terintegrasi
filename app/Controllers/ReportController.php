@@ -35,8 +35,8 @@ class ReportController extends ResourceController
             'problem_type'   => $this->request->getPost('problem_type'),
             'description'    => $this->request->getPost('description'),
             'room_location'  => $this->request->getPost('room_location'),
-            'photo'          => $photoPath, // Simpan path relatif
-            'status'         => 'pending', // Status default
+            'photo'          => $photoPath,
+            'status'         => 'pending', 
             'created_at'     => date('Y-m-d H:i:s'),
         ];
 
