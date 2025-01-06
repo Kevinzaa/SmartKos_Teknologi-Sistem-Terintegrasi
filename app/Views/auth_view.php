@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="<?= base_url('css/style.css'); ?>">
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <a href="<?= base_url('/'); ?>">← Back to Home</a>
-    </header>
-
     <div class="container">
+
+            <!-- Header Section -->
+        <header>
+            <a href="<?= base_url('/'); ?>">← Back to Home</a>
+        </header>
+
         <h1>Authentication</h1>
 
         <!-- Register Section -->

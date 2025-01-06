@@ -16,11 +16,6 @@ header {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Tambahkan ini */
-    position: fixed; /* Agar header tetap di atas */
-    top: 0; /* Tetap di atas */
-    left: 0; /* Mulai dari kiri */
-    z-index: 1000; /* Pastikan berada di atas elemen lain */
 }
 
 header a {
@@ -35,15 +30,12 @@ header a:hover {
     color: #333;
 }
 
+/* Container */
 .container {
-    max-width: 800px;
-    margin: 80px auto; /* Tambahkan margin-top agar tidak menabrak header */
+    max-width: 900px;
+    margin: 40px auto;
     padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 
 /* Card */
 .card {

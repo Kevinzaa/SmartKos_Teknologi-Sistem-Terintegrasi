@@ -9,7 +9,9 @@
 <body>
     <div class="container">
         <h1>Smart Kos Report Management</h1>
-
+        
+        <div class="separator"></div>
+        
         <!-- Create Report -->
         <div class="card">
             <h2>Create Report</h2>
@@ -33,6 +35,8 @@
                 <button type="submit">Submit Report</button>
             </form>
         </div>
+        
+        <div class="separator"></div>
 
         <!-- View All Reports -->
         <div class="card">
@@ -41,13 +45,15 @@
             <div class="report-list" id="reportList"></div>
         </div>
 
+        <div class="separator"></div>
+
         <!-- View Statistics -->
         <div class="card">
             <h2>Statistics</h2>
             <button id="viewStats">Get Statistics</button>
             <div id="stats" class="stats"></div>
         </div>
-            
+        
         <div class="separator"></div>
             
         <!-- Filter Reports by Status -->
@@ -60,7 +66,6 @@
             </select>
             <button id="filterReports">Filter Reports</button>
             <div class="report-list" id="filteredReports"></div>
-            <div id="filteredReports" class="report-list"></div>
         </div>
 
         <div class="separator"></div>
