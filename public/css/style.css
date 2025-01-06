@@ -1,0 +1,211 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fc;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Tambahkan ini */
+    position: fixed; /* Agar header tetap di atas */
+    top: 0; /* Tetap di atas */
+    left: 0; /* Mulai dari kiri */
+    z-index: 1000; /* Pastikan berada di atas elemen lain */
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+header a:hover {
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 80px auto; /* Tambahkan margin-top agar tidak menabrak header */
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Card */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    padding: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+    margin-bottom: 20px;
+    color: #4a90e2;
+    font-size: 1.5rem;
+}
+
+/* Form Styles */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: #555;
+}
+
+input, select, textarea {
+    width: 100%; /* Gunakan lebar penuh container */
+    padding: 12px 15px;
+    margin-top: 5px;
+    border: 1px solid #dfe4ea;
+    border-radius: 8px;
+    background-color: #f9fafc;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    box-sizing: border-box; /* Pastikan padding tidak menambah lebar elemen */
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #4a90e2;
+    background-color: #ffffff;
+    outline: none;
+}
+
+/* Button Styles */
+button {
+    display: block;
+    background-color: #4a90e2;
+    color: #ffffff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0 auto;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #357ab7;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Report List */
+.report-list div {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f0f4f9;
+    border-radius: 8px;
+    border-left: 5px solid #4a90e2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#statusFilter {
+    margin-bottom: 15px; /* Tambahkan jarak di bawah dropdown */
+}
+
+button#viewReports {
+    margin-bottom: 15px;
+}
+
+button#filterReports {
+    margin-top: 15px; /* Tambahkan jarak di atas tombol */
+    margin-bottom: 10px;
+}
+
+/* Stats Section */
+.stats p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Separator */
+.separator {
+    height: 3px;
+    background: #4a90e2;
+    margin: 30px 0;
+    border-radius: 4px;
+    opacity: 0.8;
+}
+
+/* Delete Button */
+.delete-button {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-button:hover {
+    background-color: #e05555;
+}
+
+.delete-button:active {
+    transform: scale(0.98);
+}
+
+.no-report-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    padding: 20px;
+    border: 1px dashed #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    button, .delete-button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+}

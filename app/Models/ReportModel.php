@@ -19,5 +19,13 @@ class ReportModel extends Model
         'room_location',
         'photo',
         'status',
-    ]; // Kolom yang diizinkan untuk diisi
+        'user_id'
+    ]; 
+
+    public function getReportsWithUsernames()
+    {
+        return $this->select('reports.*, users.username')
+                    ->join('users', 'users.id = reports.user_id')
+                    ->findAll();
+    }
 }

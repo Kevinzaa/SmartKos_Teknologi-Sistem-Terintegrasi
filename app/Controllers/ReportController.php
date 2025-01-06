@@ -16,47 +16,83 @@ class ReportController extends ResourceController
             'room_location' => 'required',
             'photo'         => 'uploaded[photo]|max_size[photo,2048]|is_image[photo]', 
         ];
-
+    
         if (!$this->validate($rules)) {
             return $this->failValidationErrors($this->validator->getErrors());
         }
-
+    
+        $userId = $this->getUserIdFromToken(); // Ambil user_id dari token
+        if (!$userId) {
+            return $this->failUnauthorized('Invalid or missing token.');
+        }
+    
         $file = $this->request->getFile('photo');
         if ($file->isValid() && !$file->hasMoved()) {
-            $fileName = $file->getRandomName(); 
-            $file->move('uploads', $fileName); 
-            $photoPath = 'uploads/' . $fileName; 
+            $fileName = $file->getRandomName();
+            $file->move('uploads', $fileName);
+            $photoPath = 'uploads/' . $fileName;
         } else {
             return $this->fail('Error uploading photo.');
         }
-
+    
         $data = [
             'problem_type'   => $this->request->getPost('problem_type'),
             'description'    => $this->request->getPost('description'),
             'room_location'  => $this->request->getPost('room_location'),
             'photo'          => $photoPath,
-            'status'         => 'pending', 
+            'status'         => 'pending',
+            'user_id'        => $userId, // Tambahkan user_id
             'created_at'     => date('Y-m-d H:i:s'),
         ];
-
+    
         if ($this->model->insert($data)) {
             return $this->respondCreated(["message" => "Report berhasil disubmit."]);
         } else {
             return $this->failServerError("Gagal dalam membuat report.");
         }
+    }    
+
+    private function getUserIdFromToken()
+    {
+        $authHeader = $this->request->getHeaderLine('Authorization');
+        
+        if (!$authHeader || strpos($authHeader, 'Bearer ') !== 0) {
+            return null; // Tidak ada token
+        }
+
+        $token = substr($authHeader, 7); // Hilangkan "Bearer "
+        
+        try {
+            // Dekode token. Gunakan library JWT jika diperlukan.
+            $decoded = base64_decode($token);
+
+            if (!$decoded) {
+                throw new \Exception('Invalid token.');
+            }
+
+            // Misalnya, token adalah JSON dengan user_id
+            $payload = json_decode($decoded, true);
+            if (isset($payload['user_id'])) {
+                return $payload['user_id']; // Ambil user_id dari token
+            }
+
+            throw new \Exception('Invalid payload structure.');
+        } catch (\Exception $e) {
+            return null; // Jika terjadi kesalahan, return null
+        }
     }
 
-    // Get all reports (for owners)
+
     public function index()
     {
-        $reports = $this->model->findAll();
+        $reports = $this->model->getReportsWithUsernames();
     
         foreach ($reports as &$report) {
-            $report['photo_url'] = base_url($report['photo']); 
+            $report['photo_url'] = base_url($report['photo']);
         }
     
         return $this->respond($reports);
-    }    
+    }      
 
     // Update report status
     public function updateStatus($id = null)
@@ -83,16 +119,25 @@ class ReportController extends ResourceController
         }
     }
   
-
     public function getByStatus($status = null)
     {
         $reports = $this->model->where('status', $status)->findAll();
-        if (!$reports) {
-            return $this->failNotFound("No reports found with status: $status");
+    
+        // Tetap kembalikan array kosong jika tidak ada laporan
+        if (empty($reports)) {
+            return $this->respond([
+                'message' => "No reports found with status: $status",
+                'data'    => []
+            ], 200); // Kode HTTP 200
         }
-        return $this->respond($reports);
+    
+        // Kembalikan laporan jika ada
+        return $this->respond([
+            'message' => "Reports found with status: $status",
+            'data'    => $reports
+        ], 200); // Kode HTTP 200
     }
-
+    
     public function stats()
     {
         $stats = [
@@ -121,6 +166,11 @@ class ReportController extends ResourceController
         } else {
             return $this->failServerError("Failed to delete report.");
         }
+    }
+
+    public function home()
+    {
+        return view('report_view'); // Menampilkan halaman manajemen laporan
     }
 
 }

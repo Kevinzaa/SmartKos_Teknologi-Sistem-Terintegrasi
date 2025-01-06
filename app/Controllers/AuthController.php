@@ -38,26 +38,40 @@ class AuthController extends ResourceController
         }
     }
     
-
     public function login()
     {
         $data = $this->request->getJSON(true); 
-
+    
         if (empty($data['username']) || empty($data['password'])) {
             return $this->failValidationErrors(['error' => 'Username and password are required.']);
         }
-
+    
         $user = $this->model->where('username', $data['username'])->first();
     
         if (!$user || !password_verify($data['password'], $user['password'])) {
             return $this->failUnauthorized('Invalid username or password.');
         }
-
-        $token = base64_encode(random_bytes(32));
+    
+        // Buat payload token dengan user_id
+        $payload = [
+            'user_id' => $user['id'],
+            'username' => $user['username'],
+            'iat' => time(), // Waktu token dibuat
+            'exp' => time() + (60 * 60), // Waktu kedaluwarsa (1 jam)
+        ];
+    
+        // Encode payload sebagai token (gunakan JWT library jika memungkinkan)
+        $token = base64_encode(json_encode($payload));
     
         return $this->respond([
             'message' => 'Login successful.',
             'token' => $token
         ]);
-    }    
+    }
+     
+    public function registerView()
+    {
+        return view('auth_view'); // Menampilkan halaman register dan login
+    }
+
 }
