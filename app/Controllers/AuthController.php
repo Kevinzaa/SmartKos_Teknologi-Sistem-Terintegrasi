@@ -71,7 +71,7 @@ class AuthController extends ResourceController
      
     public function registerView()
     {
-        return view('auth_view'); // Menampilkan halaman register dan login
+        return view('auth_view');
     }
 
 }
