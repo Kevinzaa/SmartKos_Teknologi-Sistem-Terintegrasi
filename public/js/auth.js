@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:8080/auth";
+const apiUrl = "http://smartkos.iceiy.com/smartkos/public/auth";
 
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
     e.preventDefault();

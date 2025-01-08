@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:8080/report";
+const apiUrl = "http://smartkos.iceiy.com/smartkos/public/report";
 
 async function fetchWithAuth(url, options = {}) {
     const token = localStorage.getItem('authToken');
