@@ -46,7 +46,7 @@ Dokumentasi : https://drive.google.com/file/d/1kr0rUNdUlmB1s4sN6s9vDqz9bupWheC_/
 1. Clone the repository:
     ```bash
     git clone https://github.com/Kevinzaa/SmartKos_Teknologi-Sistem-Terintegrasi.git
-    cd smartkos
+    cd SmartKos_Teknologi-Sistem-Terintegrasi
     ```
 
 
